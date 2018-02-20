@@ -1,0 +1,25 @@
+Package: HGLD
+Type: Package
+Title: Fit the Hurdle Generalized Lambda Distribution
+Version: 0.1.0
+Author: Diego Marcondes
+URL: http://github.com/dmarcondes/HGLD
+BugReports: https://github.com/dmarcondes/HGLD/issues
+Maintainer: Diego Marcondes <dmarcondes@ime.usp.br>
+Description: Functions to perform the Hurdle Generalized Lambda Distribution Regression and to fit the Hurdle Generalized Lambda Distribution to data. The functions of this package are modifications of the functions of packages gamlss, GLDEX and GLDReg, so that most of the credit for the functions of this package must go to the authors and maintainers of those three packages.
+License: GPL-3
+Imports:
+  ggplot2 (>= 2.2.1),
+  gridExtra (>= 2.1.1),
+  grid (>= 3.3),
+  gamlss.dist (>= 5.0-2),
+  cluster (>= 2.0.6)
+Depends:
+    R (>= 3.3),
+    gamlss (>= 5.0-2),
+    GLDEX (>= 2.0.0.5),
+    GLDreg (>= 1.0.7)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Reference: Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) arxiv1712.02183
