@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Diego Marcondes
 URL: http://github.com/dmarcondes/HGLD
 BugReports: https://github.com/dmarcondes/HGLD/issues
-Maintainer: Diego Marcondes <dmarcondes@ime.usp.br>
+Maintainer: Diego Marcondes <diegormmarcondes@gmail.com>
 Description: Functions to perform the Hurdle Generalized Lambda Distribution Regression and to fit the Hurdle Generalized Lambda Distribution to data. The functions of this package are modifications of the functions of packages gamlss, GLDEX and GLDReg, so that most of the credit for the functions of this package must go to the authors and maintainers of those three packages.
 License: GPL-3
 Imports:
