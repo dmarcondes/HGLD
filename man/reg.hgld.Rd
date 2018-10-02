@@ -101,7 +101,7 @@ r <- suppressWarnings(reg.hgld(data,formula,formula,TRUE,n.simu = 10,param = "rs
 
 }
 \references{
-Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 
 Su, S.; Flexible Parametric Quantile Regression Model. (2015), Statistics & Computing May 2015, Volume 25, Issue 3, pp 635-650
 }
