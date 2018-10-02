@@ -22,4 +22,4 @@ Depends:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Reference: Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) arxiv1712.02183
+Reference: Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) arxiv1712.02183
