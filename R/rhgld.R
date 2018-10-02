@@ -23,7 +23,7 @@
 #' qplot(rhgld(n = 1000,mixture = TRUE,lambda1 = c(0.05,0,1,3,6),lambda2 = c(0.3,2,3,6),prob = 0.5,
 #'             param = "fmkl"),geom = "histogram",bins = 50)
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 #' @references Su, S.; Fitting Single and Mixture of Generalized Lambda Distributions to Data via Discretized and Maximum Likelihood Methods: GLDEX in R. (2007), Journal of Statistical Software: *21* 9.
 
 rhgld <- function(n,mixture = FALSE,lambda1,lambda2 = NULL,prob = NULL,param = "fmkl"){

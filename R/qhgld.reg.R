@@ -23,7 +23,7 @@
 #' newvalues <- tmp[sample(1:nrow(tmp),5),c(2,3,8)]
 #' suppressWarnings(qhgld.reg(p = seq(0.05,0.95,0.1),reg,newvalues))
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 
 qhgld.reg <- function(p,reg,newvalues,l0 = TRUE,location = TRUE){
   # Estimated coeffcients

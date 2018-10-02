@@ -54,7 +54,7 @@
 #' data <- c(rcauchy(50,location = 10),rep(0,30),rcauchy(50))
 #' fit <- fit.hgld(data = data,mixture = TRUE)
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 #' @references Su, S.; Fitting Single and Mixture of Generalized Lambda Distributions to Data via Discretized and Maximum Likelihood Methods: GLDEX in R.(2007), Journal of Statistical Software: *21* 9.
 
 fit.hgld <- function(data,mixture = FALSE,clustering.m = clara,threshold = NULL,leap1 = 3,leap2 = 3,fun1 = "runif.sobol",

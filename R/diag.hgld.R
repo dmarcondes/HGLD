@@ -40,7 +40,7 @@
 #' fit <- fit.hgld(data = data,mixture = TRUE)
 #' d <- suppressWarnings(diag.hgld(fit))
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 #' @references Su, S. Fitting Single and Mixture of Generalized Lambda Distributions to Data via Discretized and Maximum Likelihood Methods: GLDEX in R. (2007), Journal of Statistical Software: *21* 9.
 
 diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,trace = TRUE,no.test = 1000,

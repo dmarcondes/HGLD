@@ -31,7 +31,7 @@
 #' stat_function(fun = function(x) dhgld(x = x,mixture = TRUE,lambda1 = fit$par[1:5,2],
 #' lambda2 = fit$par[6:9,2],prob = fit$par[10,2],param = "rs"))}
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 #' @references Su, S.; Fitting Single and Mixture of Generalized Lambda Distributions to Data via Discretized and Maximum Likelihood Methods: GLDEX in R. (2007), Journal of Statistical Software: *21* 9.
 
 dhgld <- function(x,mixture = FALSE,lambda1,lambda2 = NULL,prob = NULL,param = "fmkl",inverse.eps = 1e-08,max.iterations = 500){

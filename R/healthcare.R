@@ -13,5 +13,5 @@
 #' @return \item{year}{The considered year.}
 #' @return \item{previous_expense}{The healthcare expense of the customer on the previous year.}
 #' @return \item{log_previous_expense}{The logarithm of the healthcare expense of the customer on the previous year.}
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 "healthcare"

@@ -29,7 +29,7 @@
 #' newvalues <- tmp[sample(1:nrow(tmp),5),c(2,3,5,8)]
 #' plot(reg,newvalues)
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distributions. (2017) \emph{arxiv1712.02183}
 
 plot.reg.hgld <- function(x,newvalues,name = row.names(newvalues),color = NULL,xlab = "Data",
                            xlim = c(min(x$NZdata[[all.vars(x$loc.formula)[1]]]),max(x$NZdata[[all.vars(x$loc.formula)[1]]])),

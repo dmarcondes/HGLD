@@ -32,7 +32,7 @@
 #' fit <- fit.hgld(data = data,mixture = TRUE)
 #' plot(fit)
 #'
-#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; Fitting a Hurdle Generalized Lambda Distribution to healthcare expenses. (2017) \emph{arxiv1712.02183}
+#' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 
 plot.fit.hgld <- function(x,histogram = TRUE,hcolor = "white",hfill = "black",bins = 50,dcolor = c("black","red"),
                           dtype = c("solid","solid"),xlab = "Data",ylab = "Density",...){
