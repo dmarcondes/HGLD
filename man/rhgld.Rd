@@ -10,11 +10,11 @@ rhgld(n, mixture = FALSE, lambda1, lambda2 = NULL, prob = NULL,
 \arguments{
 \item{n}{Number of observations to be generated.}
 
-\item{mixture}{Whether to give the density of a mixture HGLD.}
+\item{mixture}{Whether to sample from a mixture of HGLDs.}
 
-\item{lambda1}{A vector of length 5 with the five parameters of the HGLD or the first HGLD if mixture = TRUE.}
+\item{lambda1}{A vector of length 5 with the five parameters of the HGLD, or of the first HGLD if mixture = TRUE.}
 
-\item{lambda2}{A vector of length 4 with the four parameters of the second HGLD.}
+\item{lambda2}{A vector of length 4 with the four parameters of the second HGLD if mixture = TRUE}
 
 \item{prob}{The cluster parameter for the mixture HGLD.}
 
@@ -27,15 +27,14 @@ A sample of a HGLD.
 Sample from a Hurdle Generalized Lambda Distribution.
 }
 \details{
-If the parametrization of the RS or FMKL GLD is not acceptable, the function returns NA. This function is based on the \link[GLDEX]{GLDEX} package.
+If the parametrization of the RS or fmkl GLD is not acceptable, the function returns NA. This function is based on
+the \link[GLDEX]{GLDEX} package.
 }
 \examples{
-library(ggplot2)
 set.seed(100)
-qplot(rhgld(n = 1000,lambda1 = c(0.05,0,1,3,6),param = "fmkl"),..density..,geom = "histogram",
-      bins = 30)
-qplot(rhgld(n = 1000,mixture = TRUE,lambda1 = c(0.05,0,1,3,6),lambda2 = c(0.3,2,3,6),prob = 0.5,
-            param = "fmkl"),geom = "histogram",bins = 50)
+rhgld(n = 1000,lambda1 = c(0.05,0,1,3,6),param = "fmkl")
+rhgld(n = 1000,mixture = TRUE,lambda1 = c(0.05,0,1,3,6),lambda2 = c(0.3,2,3,6),prob = 0.5,
+            param = "fmkl")
 
 }
 \references{

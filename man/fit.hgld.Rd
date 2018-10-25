@@ -4,10 +4,11 @@
 \alias{fit.hgld}
 \title{Fit the Hurdle Generalized Lambda Distribution}
 \usage{
-fit.hgld(data, mixture = FALSE, clustering.m = clara, threshold = NULL,
-  leap1 = 3, leap2 = 3, fun1 = "runif.sobol", fun2 = "runif.sobol",
-  rs.leap = 3, fmkl.leap = 3, rs.init = c(-1.5, 1.5),
-  fmkl.init = c(-0.25, 1.5), FUN = "runif.sobol", no = 10000)
+fit.hgld(data, mixture = FALSE, clustering.m = clara,
+  threshold = NULL, leap1 = 3, leap2 = 3, fun1 = "runif.sobol",
+  fun2 = "runif.sobol", rs.leap = 3, fmkl.leap = 3,
+  rs.init = c(-1.5, 1.5), fmkl.init = c(-0.25, 1.5),
+  FUN = "runif.sobol", no = 10000)
 }
 \arguments{
 \item{data}{A vector of data.}
@@ -39,14 +40,14 @@ distribution fit when fitting a mixture of HGLD. See \link[GLDEX]{fun.auto.bimod
 argument for \link[GLDEX]{runif.sobol}, \link[GLDEX]{runif.halton} or \link[GLDEX]{QUnif} of the
 \link[GLDEX]{GLDEX} package. See \link[GLDEX]{fun.data.fit.ml} for more details.}
 
-\item{fmkl.leap}{Scrambling (0,1,2,3) for the sobol sequence for the FMKL generalized lambda distribution fit. See scrambling/leap
+\item{fmkl.leap}{Scrambling (0,1,2,3) for the sobol sequence for the fmkl generalized lambda distribution fit. See scrambling/leap
 argument for \link[GLDEX]{runif.sobol}, \link[GLDEX]{runif.halton} or \link[GLDEX]{QUnif} of the
 \link[GLDEX]{GLDEX} package. See \link[GLDEX]{fun.data.fit.ml} for more details.}
 
 \item{rs.init}{Initial values (lambda3 and lambda4) for the RS generalized lambda distribution. See
 \link[GLDEX]{fun.data.fit.ml} for more details.}
 
-\item{fmkl.init}{Initial values (lambda3 and lambda4) for the FMKL generalized lambda distribution. See
+\item{fmkl.init}{Initial values (lambda3 and lambda4) for the fmkl generalized lambda distribution. See
 \link[GLDEX]{fun.data.fit.ml} for more details.}
 
 \item{FUN}{A character string of either "runif.sobol" (default), "runif.halton" or "QUnif". See
@@ -56,7 +57,7 @@ argument for \link[GLDEX]{runif.sobol}, \link[GLDEX]{runif.halton} or \link[GLDE
 \link[GLDEX]{fun.data.fit.ml} for more details.}
 }
 \value{
-\item{par}{The estimate of the HGLD five parameters for both the RS and FMKL parametrizations if \emph{mixture
+\item{par}{The estimate of the HGLD five parameters for both the RS and fmkl parametrizations if \emph{mixture
 = FALSE}. Otherwise present the estimation of ten parameters: the zero probability mass, the four parameters of
 each GLD and the clustering parameter p.}
 
@@ -65,21 +66,21 @@ each GLD and the clustering parameter p.}
 \item{mixture}{Whether a mixture of HGLD was fitted.}
 }
 \description{
-Fit the Hurdle Generalized Lambda Distribution to a dataset by numerical maximum likelihood.
+Fit the Hurdle Generalized Lambda Distribution to a dataset by the Numerical Maximum Likelihood Method.
 }
 \details{
-Given a dataset, estimate by the numerical maximum likelihood method the five parameters of the HGLD.
-Fit both the RS and the FMKL parametrizations. Also fit mixture of HGLD.
+Given a dataset, estimate by the Numerical Maximum Likelihood Method the five parameters of the HGLD.
+Fit both the RS and the fmkl parametrizations. Also fit a mixture of HGLDs.
 }
 \examples{
 set.seed(100)
-data <- healthcare[sample(1:nrow(healthcare),100),]
+data <- healthcare[sample(1:nrow(healthcare),30),]
 fit <- fit.hgld(data$log_expense)
 
 #mixture
 set.seed(100)
-data <- c(rcauchy(50,location = 10),rep(0,30),rcauchy(50))
-fit <- fit.hgld(data = data,mixture = TRUE)
+data <- c(rcauchy(20,location = 10),rep(0,10),rcauchy(20))
+fit2 <- fit.hgld(data = data,mixture = TRUE)
 
 }
 \references{

@@ -12,11 +12,12 @@
 \arguments{
 \item{x}{An object of class \link[HGLD]{reg.hgld}.}
 
-\item{newvalues}{A data frame with the new values of the covariates. Column names must match the ones given in formulas \emph{loc.formula} and \emph{zero.formula}.}
+\item{newvalues}{A data frame with the new values of the covariates. Column names must match the ones given in formulas
+\emph{loc.formula} and \emph{zero.formula}.}
 
-\item{name}{A vector with the names of the new values rows. Default is the row names of the new values data frame.}
+\item{name}{A vector with the names of the new values profiles. Default is the row names of the newvalues data frame.}
 
-\item{color}{The color of each density curve. Must have one color for each row of new values.}
+\item{color}{The color of each density curve. Must have one color for each row of newvalues.}
 
 \item{xlab}{Label of the x-axis.}
 
@@ -39,11 +40,12 @@ Given an object of class \link[HGLD]{reg.hgld} and new values for the covariates
  density curves are plotted in the same plot.
 }
 \examples{
-set.seed(10)
+set.seed(100)
 tmp <- na.omit(healthcare)
-data <- tmp[sample(1:nrow(tmp),100),]
+data <- tmp[sample(1:nrow(tmp),50),]
 formula <- log_expense ~ age + sex + log_previous_expense
-reg <- suppressWarnings(reg.hgld(data,formula,formula,TRUE,n.simu = 10,param = "rs",plotKS = TRUE))
+reg <- suppressWarnings(reg.hgld(data = data,zero.formula = formula,loc.formula = formula,
+                                 full = FALSE,param = "rs"))
 newvalues <- tmp[sample(1:nrow(tmp),5),c(2,3,5,8)]
 plot(reg,newvalues)
 

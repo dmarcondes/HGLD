@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.fit.hgld.R
 \name{plot.fit.hgld}
 \alias{plot.fit.hgld}
-\title{Plot the Hurdle Generalized Lambda Distribution fit}
+\title{Plot the Hurdle Generalized Lambda Distribution}
 \usage{
 \method{plot}{fit.hgld}(x, histogram = TRUE, hcolor = "white",
   hfill = "black", bins = 50, dcolor = c("black", "red"),
@@ -19,9 +19,9 @@
 
 \item{bins}{Number of histogram bins.}
 
-\item{dcolor}{Color of the RS and FMKL density plot.}
+\item{dcolor}{Color of the RS and fmkl density plot.}
 
-\item{dtype}{Type of the RS and FMKL density line.}
+\item{dtype}{Type of the RS and fmkl density line.}
 
 \item{xlab}{Label of the x-axis.}
 
@@ -32,25 +32,25 @@
 \value{
 \item{RS}{\link[ggplot2]{ggplot} plot of the fitted RS GLD.}
 
-\item{FMKL}{\link[ggplot2]{ggplot} plot of the fitted FMKL GLD.}
+\item{fmkl}{\link[ggplot2]{ggplot} plot of the fitted fmkl GLD.}
 
-\item{RF}{\link[ggplot2]{ggplot} plot of the fitted RS and FMKL GLD on the same plot.}
+\item{RF}{\link[ggplot2]{ggplot} plot of the fitted RS and fmkl GLD on the same plot.}
 }
 \description{
 Density plot of the fit given by an object of class \link[HGLD]{fit.hgld}.
 }
 \details{
-The density may be plotted by itself or superimposed by the data histogram. Plot only the nonzero data values.
+The density may be plotted by itself or superimposed by the data histogram. Plot only the non-zero data values.
 }
 \examples{
 set.seed(100)
-data <- healthcare[sample(1:nrow(healthcare),100),]
+data <- healthcare[sample(1:nrow(healthcare),50),]
 fit <- fit.hgld(data$log_expense)
 plot(fit)
 
 #mixture
 set.seed(100)
-data <- c(rcauchy(50,location = 10),rep(0,30),rcauchy(50))
+data <- c(rcauchy(20,location = 10),rep(0,10),rcauchy(20))
 fit <- fit.hgld(data = data,mixture = TRUE)
 plot(fit)
 

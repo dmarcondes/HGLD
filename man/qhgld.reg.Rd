@@ -11,7 +11,8 @@ qhgld.reg(p, reg, newvalues, l0 = TRUE, location = TRUE)
 
 \item{reg}{An object of class \link[HGLD]{reg.hgld}.}
 
-\item{newvalues}{A data frame with the new values of the covariates. Column names must match the ones given in formulas \emph{loc.formula} and \emph{zero.formula}.}
+\item{newvalues}{A data frame with the new values of the covariates. Column names must match the ones given in formulas \emph{loc.formula} and \emph{zero.formula} of
+the \link[HGLD]{reg.hgld} object.}
 
 \item{l0}{Whether to return the lambda0 of each profile.}
 
@@ -26,16 +27,17 @@ Quantile function of a Hurdle Generalized Lambda Regression.
 \details{
 Given an object of class \link[HGLD]{reg.hgld}, a percentile and new values for the covariates,
  it returns the quantile of the fitted HGLD, given the covariates. The fitted HGLD must be non-negative. The
- contrast on the \emph{newvalues} data frame must be same of the \emph{data} used in the \link[HGLD]{reg.hgld} object.
+ contrast on the \emph{newvalues} data frame must be the same of the \emph{data} used to fit the \link[HGLD]{reg.hgld} regression.
 }
 \examples{
-set.seed(10)
+set.seed(100)
 tmp <- na.omit(healthcare)
-data <- tmp[sample(1:nrow(tmp),100),]
+data <- tmp[sample(1:nrow(tmp),50),]
 formula <- log_expense ~ age + sex + log_previous_expense
-reg <- suppressWarnings(reg.hgld(data,formula,formula,TRUE,n.simu = 10,param = "rs",plotKS = TRUE))
+reg <- suppressWarnings(reg.hgld(data = data,zero.formula = formula,loc.formula = formula,
+                        full = FALSE,param = "rs"))
 newvalues <- tmp[sample(1:nrow(tmp),5),c(2,3,8)]
-suppressWarnings(qhgld.reg(p = seq(0.05,0.95,0.1),reg,newvalues))
+qhgld.reg(p = seq(0.05,0.95,0.1),reg,newvalues)
 
 }
 \references{

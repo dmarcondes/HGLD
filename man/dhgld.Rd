@@ -10,13 +10,13 @@ dhgld(x, mixture = FALSE, lambda1, lambda2 = NULL, prob = NULL,
 \arguments{
 \item{x}{Vector of data.}
 
-\item{mixture}{Whether to give the density of a mixture HGLD.}
+\item{mixture}{Whether to give the density of a mixture of HGLDs.}
 
-\item{lambda1}{A vector of length 5 with the five parameters of the HGLD or the first HGLD if mixture = TRUE.}
+\item{lambda1}{A vector of length 5 with the five parameters of the HGLD, or of the first HGLD if mixture = TRUE.}
 
-\item{lambda2}{A vector of length 4 with the four parameters of the second HGLD.}
+\item{lambda2}{A vector of length 4 with the four parameters of the second HGLD if mixture = TRUE.}
 
-\item{prob}{The cluster parameter for the mixture HGLD.}
+\item{prob}{The cluster parameter (probability) for the mixture of HGLDs.}
 
 \item{param}{"fmkl" or "rs".}
 
@@ -31,23 +31,22 @@ The probability density of the continuous part of the HGLD.
 Density of the Hurdle Generalized Lambda Distribution.
 }
 \details{
-If the parametrization of the RS or FMKL HGLD is not acceptable, the function returns NA. This function is based on the \link[GLDEX]{GLDEX} package.
+If the parametrization of the RS or FMKL HGLD is not acceptable, the function returns NA. This function is based on the
+\link[GLDEX]{GLDEX} package.
 }
 \examples{
 library(ggplot2)
-set.seed(100)
-data <- healthcare[sample(1:nrow(healthcare),100),]
-fit <- fit.hgld(data$log_expense)
-{ggplot(data.frame(x = data$log_expense[data$log_expense!=0]),aes(x = x)) +
-stat_function(fun = function(x) dhgld(x = x,lambda1 = fit$par[,2],param = "rs"))}
+{ggplot(data.frame(x = seq(-3,1,0.01)),aes(x = x)) +
+stat_function(fun = function(x) dhgld(x = x,
+                                     lambda1 = c(0.48,0.509,-0.000369,-0.0002483,-0,0003916),
+                                     param = "rs"))}
 
 #mixture
-set.seed(100)
-data <- c(rcauchy(50,location = 10),rep(0,30),rcauchy(50))
-fit <- fit.hgld(data,TRUE)
-{ggplot(data.frame(x = data[data!=0]),aes(x = x)) +
-stat_function(fun = function(x) dhgld(x = x,mixture = TRUE,lambda1 = fit$par[1:5,2],
-lambda2 = fit$par[6:9,2],prob = fit$par[10,2],param = "rs"))}
+lambda1 <- c(0.230,0.3514,-0.4472,-0.374,-0.3108)
+lambda2 <- c(9.624,-1.227,-0.629,-0.8515)
+{ggplot(data.frame(x = seq(-10,20,0.25)),aes(x = x)) +
+stat_function(fun = function(x) dhgld(x = x,mixture = TRUE,lambda1 = lambda1,
+lambda2 = lambda2,prob = 0.47954,param = "rs"))}
 
 }
 \references{

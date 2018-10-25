@@ -3,7 +3,7 @@
 \docType{data}
 \name{healthcare}
 \alias{healthcare}
-\title{Healthcare data set}
+\title{Healthcare dataset}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 289456 rows and 8 columns.}
 \usage{
 healthcare
@@ -26,13 +26,12 @@ healthcare
 \item{log_previous_expense}{The logarithm of the healthcare expense of the customer on the previous year.}
 }
 \description{
-Data set containing the healthcare expense of 129,257 customers of a Brazilian healthcare
+Dataset containing the healthcare expense of 129,257 customers of a Brazilian healthcare
 company between 2006 and 2009.
 }
 \details{
 The expenses are in Reais (Brazilian currency) and were deflated to the January 2006 value. In order to
-fit the models of the paper in the references it is necessary to turn every observation whose expense is less than
-R$ 100 into zero.
+fit the models of the paper in the references it is necessary to truncate the expanses at R$ 100.
 }
 \references{
 Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}

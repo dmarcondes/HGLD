@@ -11,7 +11,7 @@ reg.hgld(data, zero.formula, loc.formula, full = FALSE, param = "fmkl",
 \arguments{
 \item{data}{A dataset containing the variables of the model.}
 
-\item{zero.formula}{A symbolic expression of the model to be fitted to the inflation parameter of the distribution.}
+\item{zero.formula}{A symbolic expression of the model to be fitted to the hurdle parameter of the distribution.}
 
 \item{loc.formula}{A symbolic expression of the model to be fitted to the location of the distribution.}
 
@@ -24,7 +24,7 @@ reg.hgld(data, zero.formula, loc.formula, full = FALSE, param = "fmkl",
 \item{init}{Choose a different set of initial values to start the optimization process. This can either be full set of parameters including
 GLD parameter estimates, or it can just be the coefficient estimates of the regression model.}
 
-\item{alpha}{Significant level of the Confidence Interval for the GLD regression.}
+\item{alpha}{Significance level of the Confidence Interval for the GLD regression.}
 
 \item{n.simu}{Number of times to repeat the simulation runs, defaults to 1000.}
 
@@ -37,33 +37,33 @@ GLD parameter estimates, or it can just be the coefficient estimates of the regr
 
 \item{Zplot}{A function that generates the four diagnostic plots of the logistic regression.}
 
-\item{Zres.sumarry}{Summary of the quantile residuals of the logistic regression.}
+\item{Zres.sumarry}{Summary of the normalised quantile residuals of the logistic regression.}
 
-\item{Zfit}{Quantile residuals versus fitted values for the logistic regression.}
+\item{Zfit}{Normalised quantile residuals versus fitted values for the logistic regression.}
 
-\item{Zindex}{Quantile residuals versus index for the logistic regression.}
+\item{Zindex}{Normalised quantile residuals versus index for the logistic regression.}
 
-\item{Zdensity}{Quantile residuals density for the logistic regression.}
+\item{Zdensity}{Normalised quantile residuals density for the logistic regression.}
 
-\item{Zqq}{QQ-norm plot of the quantile residuals for the logistic regression.}
+\item{Zqq}{QQ-norm plot of the normalised quantile residuals for the logistic regression.}
 
-\item{NZqq}{QQ-plot for the GLD regression.}
+\item{NZqq}{QQ-plot for the GLD regression residuals.}
 
-\item{NZquant}{Quantile plot for the GLD regression.}
+\item{NZquant}{Quantile plot for the GLD regression residuals.}
 
-\item{NZhistogram}{The histogram of the residuals.}
+\item{NZhistogram}{The histogram of the GLD regression residuals.}
 
-\item{NZplot}{The quantile residuals plots for the GLD regression.}
+\item{NZplot}{The normalised quantile residuals plots for the GLD regression.}
 
-\item{NZres.sumarry}{Summary of the quantile residuals of the GLD regression.}
+\item{NZres.sumarry}{Summary of the normalised quantile residuals of the GLD regression.}
 
-\item{NZfit}{Quantile residuals versus fitted values for the GLD regression.}
+\item{NZfit}{Normalised quantile residuals versus fitted values for the GLD regression.}
 
-\item{NZindex}{Quantile residuals versus index for the GLD regression.}
+\item{NZindex}{Normalised quantile residuals versus index for the GLD regression.}
 
-\item{NZdensity}{Quantile residuals density for the GLD regression.}
+\item{NZdensity}{normalised quantile residuals density for the GLD regression.}
 
-\item{NZqqQuant}{QQ-norm plot of the quantile residuals for the GLD regression.}
+\item{NZqqQuant}{QQ-norm plot of the normalised quantile residuals for the GLD regression.}
 
 \item{KS}{KS test p-value for the GLD regression.}
 
@@ -75,7 +75,7 @@ GLD parameter estimates, or it can just be the coefficient estimates of the regr
 
 \item{NZdata}{The data used to fit the GLD regression.}
 
-\item{zero.formula}{A symbolic expression of the model to be fitted to the inflation parameter of the distribution.}
+\item{zero.formula}{A symbolic expression of the model to be fitted to the hurdle parameter of the distribution.}
 
 \item{loc.formula}{A symbolic expression of the model to be fitted to the location of the distribution.}
 
@@ -87,17 +87,18 @@ GLD parameter estimates, or it can just be the coefficient estimates of the regr
 Fit a Hurdle Generalized Lambda Distribution Regression model to a dataset.
 }
 \details{
-Given a dataset, estimate by the numerical maximum likelihood method the regression coefficients of the model and
+Given a dataset, estimate by the Numerical Maximum Likelihood method the regression coefficients of the model and
 the five parameters of the error GLD. The regression coefficients that model the location of the distribution are estimated by
-the functions \link[GLDreg]{GLD.lm} and \link[GLDreg]{GLD.lm.full} of the package \link[GLDreg]{GLDreg}. The regression coefficients
-that model the hurdle parameter of the distribution are estimated by the function \link[gamlss]{gamlss}.
+the functions \link[GLDreg]{GLD.lm} and \link[GLDreg]{GLD.lm.full} of package \link[GLDreg]{GLDreg}. The regression coefficients
+that model the hurdle parameter of the distribution are estimated by function \link[gamlss]{gamlss}.
 }
 \examples{
 set.seed(100)
 tmp <- na.omit(healthcare)
-data <- tmp[sample(1:nrow(tmp),100),]
+data <- tmp[sample(1:nrow(tmp),50),]
 formula <- log_expense ~ age + sex + log_previous_expense
-r <- suppressWarnings(reg.hgld(data,formula,formula,TRUE,n.simu = 10,param = "rs",plotKS = TRUE))
+reg <- suppressWarnings(reg.hgld(data = data,zero.formula = formula,loc.formula = formula,
+                                 full = FALSE,param = "rs"))
 
 }
 \references{
