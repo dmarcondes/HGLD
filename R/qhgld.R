@@ -9,25 +9,22 @@
 #' @details The HGLD must be non-negative, otherwise the quantile is only approximate. If the parametrization of
 #' the RS or FMKL GLD is not acceptable, the function returns NA. This function is based on the \link[GLDEX]{GLDEX} package.
 #'
-#' @param p	Vector of probabilities.
-#' @param mixture Whether to give the density of a mixture HGLD.
-#' @param lambda1 A vector of length 5 with the five parameters of the HGLD or the first HGLD if mixture = TRUE.
-#' @param lambda2 A vector of length 4 with the four parameters of the second HGLD.
+#' @param p Vector of probabilities.
+#' @param mixture Whether to give the quantile function of a mixture of HGLDs.
+#' @param lambda1 A vector of length 5 with the five parameters of the HGLD, or of the first HGLD if mixture = TRUE.
+#' @param lambda2 A vector of length 4 with the four parameters of the second HGLD if mixture = TRUE.
 #' @param prob The cluster parameter for the mixture HGLD.
 #' @param param "fmkl" or "rs".
-#' @param trace Whether progress bar must be printed in order to trace the algorithm.
+#' @param trace Whether a progress bar must be printed in order to trace the algorithm.
 #' @param inverse.eps Accuracy of calculation for the numerical determination of F(x), defaults to 1e-8.
 #' @param max.iterations Maximum number of iterations in the numerical determination of F(x), defaults to 500.
 #' @return The quantile function of a HGLD.
 #' @examples
-#' set.seed(100)
-#' data <- healthcare[sample(1:nrow(healthcare),100),]
-#' fit <- fit.hgld(data$log_expense)
-#' qhgld(p = seq(0,1,0.05),lambda1 = fit$par$RS,param = "rs")
+#' qhgld(p = seq(0.05,1,0.05),lambda1 = c(0.540,3.561,0.019,0.009,0.022),param = "rs")
 #'
 #' #mixture
-#' qhgld(p = seq(0,1,0.1),mixture = TRUE,lambda1 = c(0.05,0,1,3,6),lambda2 = c(0.3,2,3,6),prob = 0.5,
-#'             param = "fmkl")
+#' qhgld(p = seq(0.05,1,0.05),mixture = TRUE,lambda1 = c(0.1,8,1,3,6),lambda2 = c(0.3,10,3,6),
+#'       prob = 0.5,param = "fmkl")
 #'
 #' @references Marcondes, D.; Peixoto, C.; Maia, A. C.; A Survey of a Hurdle Model for Heavy-Tailed Data Based on the Generalized Lambda Distribution. (2017) \emph{arxiv1712.02183}
 #' @references Su, S.; Fitting Single and Mixture of Generalized Lambda Distributions to Data via Discretized and Maximum Likelihood Methods: GLDEX in R. (2007), Journal of Statistical Software: *21* 9.

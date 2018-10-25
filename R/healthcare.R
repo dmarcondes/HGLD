@@ -1,10 +1,9 @@
-#' @title Healthcare data set
+#' @title Healthcare dataset
 #'
-#' @description Data set containing the healthcare expense of 129,257 customers of a Brazilian healthcare
+#' @description Dataset containing the healthcare expense of 129,257 customers of a Brazilian healthcare
 #' company between 2006 and 2009.
 #' @details The expenses are in Reais (Brazilian currency) and were deflated to the January 2006 value. In order to
-#' fit the models of the paper in the references it is necessary to turn every observation whose expense is less than
-#' R$ 100 into zero.
+#' fit the models of the paper in the references it is necessary to truncate the expanses at R$ 100.
 #' @return \item{ID}{The ID of the customer.}
 #' @return \item{sex}{The sex of the customer.}
 #' @return \item{age}{The age of the customer on the considered year.}

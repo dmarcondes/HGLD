@@ -1,42 +1,42 @@
 #' @import GLDEX
 #' @import ggplot2
 #' @export
-#' @title Diagnostic for the Hurdle Generalized Lambda Distribution fit
+#' @title Diagnostic for the Hurdle Generalized Lambda Distribution
 #'
-#' @description Diagnostic plots and measures of goodness-of-fit for a Hurdle Generalized Lambda Distribution fit.
+#' @description Diagnostic plots and measures of goodness-of-fit for a Hurdle Generalized Lambda Distribution.
 #'
-#' @details The diagnostics techniques are applied to the nonzero data values. Returns the qq-plot and the quantile plot between the
+#' @details The diagnostics techniques are applied to the non-zero data values. Returns the qq-plot and the quantile plot between the
 #' data and the theoretical fitted HGLD. Also returns a table comparing sample moments with theoretical moments. A Kolmogorov-Simornov resample
 #' test is performed and the percentage of the times that the null hypotheses, i.e., goodness-of-fit, is not rejected is displayed.
-#' All diagnostics are performed for both the RS and FMKL GLD.
+#' All diagnostics are performed for both the RS and fmkl HGLD.
 #'
 #' @param fit An object of class \link[HGLD]{fit.hgld}.
 #' @param facet Whether the plots must be faceted for better visualization.
 #' @param facet.breaks The breaks in which to facet the data. Must be the endpoints of the intervals.
 #' @param facet.labels The labels of the categories given by the facet breaks.
 #' @param facet.ncol The number of columns for the facet plot.
-#' @param trace Whether progress bar must be printed in order to trace the algorithm.
-#' @param KS Whether the resample KS test must be performed to the nonzero values.
+#' @param trace Whether a progress bar must be printed in order to trace the algorithm.
+#' @param KS Whether the resample KS test must be performed to the non-zero values.
 #' @param no.test Total number of KS tests required.
 #' @param len Number of data to sample at each KS test.
 #' @param alpha Significance level of KS test.
 #' @param plotKS Whether to plot the KS resample test result within each plot.
 #' @return \item{qqRS}{\link[ggplot2]{ggplot} qq-plot for the RS HGLD.}
-#' @return \item{qqFMKL}{\link[ggplot2]{ggplot} qq-plot for the FMKL HGLD.}
+#' @return \item{qqfmkl}{\link[ggplot2]{ggplot} qq-plot for the fmkl HGLD.}
 #' @return \item{quantRS}{\link[ggplot2]{ggplot} quantile plot for the RS HGLD.}
-#' @return \item{quantFMKL}{\link[ggplot2]{ggplot} quantile plot for the FMKL HGLD.}
-#' @return \item{moments}{Moments comparison for the GLD fitted to the nonzero data for both parametrizations. Those are not the
-#' moments of the HGLD.}
+#' @return \item{quantfmkl}{\link[ggplot2]{ggplot} quantile plot for the fmkl HGLD.}
+#' @return \item{moments}{Moments comparison for the GLD fitted to the non-zero data for both parametrizations. These are not the
+#' moments of the HGLD, but are instead the moments of the GLD fitted to the non-zero data values.}
 #' @return \item{KS}{Percentage of no rejection for the KS resample test.}
 #' @examples
 #' set.seed(100)
-#' data <- healthcare[sample(1:nrow(healthcare),100),]
+#' data <- healthcare[sample(1:nrow(healthcare),50),]
 #' fit <- fit.hgld(data$log_expense)
-#' d <- suppressWarnings(diag.hgld(fit,facet = FALSE,plotKS = FALSE))
+#' d <- diag.hgld(fit,facet = FALSE,plotKS = FALSE)
 #'
 #' #mixture
 #' set.seed(100)
-#' data <- c(rcauchy(50,location = 10),rep(0,30),rcauchy(50))
+#' data <- c(rcauchy(20,location = 10),rep(0,10),rcauchy(20))
 #' fit <- fit.hgld(data = data,mixture = TRUE)
 #' d <- suppressWarnings(diag.hgld(fit))
 #'
@@ -58,19 +58,19 @@ diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,tra
   mixture <- fit$mixture
   nonzero <- fit$data[fit$data != 0]
   lambdaRS1 <- fit$par[1:5,2]
-  lambdaFMKL1 <- fit$par[1:5,3]
+  lambdafmkl1 <- fit$par[1:5,3]
 
   if(mixture){
     pRS <- fit$par[10,2]
-    lambdaFMKL2 <- fit$par[6:9,3]
+    lambdafmkl2 <- fit$par[6:9,3]
     lambdaRS2 <- fit$par[6:9,2]
-    pFMKL <- fit$par[10,3]
+    pfmkl <- fit$par[10,3]
   }
   else{
     pRS <- NULL
-    lambdaFMKL2 <- NULL
+    lambdafmkl2 <- NULL
     lambdaRS2 <- NULL
-    pFMKL <- NULL
+    pfmkl <- NULL
   }
 
   if(facet)
@@ -80,16 +80,16 @@ diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,tra
 
   # Legend items
   if(mixture){
-    nFMKL <- paste("FMKL(",round(lambdaFMKL1[1],2),",",round(lambdaFMKL1[2],2),",",round(lambdaFMKL1[3],2),",",
-                   round(lambdaFMKL1[4],2),",",round(lambdaFMKL1[5],2),") \n","FMKL(",round(lambdaFMKL1[1],2),",",round(lambdaFMKL2[1],2),",",
-                   round(lambdaFMKL2[2],2),",",round(lambdaFMKL2[3],2),",",round(lambdaFMKL2[4],2),") \np = ",round(pFMKL,2),sep = "")
+    nfmkl <- paste("fmkl(",round(lambdafmkl1[1],2),",",round(lambdafmkl1[2],2),",",round(lambdafmkl1[3],2),",",
+                   round(lambdafmkl1[4],2),",",round(lambdafmkl1[5],2),") \n","fmkl(",round(lambdafmkl1[1],2),",",round(lambdafmkl2[1],2),",",
+                   round(lambdafmkl2[2],2),",",round(lambdafmkl2[3],2),",",round(lambdafmkl2[4],2),") \np = ",round(pfmkl,2),sep = "")
     nRS <- paste("RS(",round(lambdaRS1[1],2),",",round(lambdaRS1[2],2),",",round(lambdaRS1[3],2),",",
                    round(lambdaRS1[4],2),",",round(lambdaRS1[5],2),") \n","RS(",round(lambdaRS1[1],2),",",round(lambdaRS2[1],2),",",
                    round(lambdaRS2[2],2),",",round(lambdaRS2[3],2),",",round(lambdaRS2[4],2),") \np = ",round(pRS,2),sep = "")
   }
   else{
-    nFMKL <- paste("FMKL(",round(lambdaFMKL1[1],2),",",round(lambdaFMKL1[2],2),",",round(lambdaFMKL1[3],2),",",
-                   round(lambdaFMKL1[4],2),",",round(lambdaFMKL1[5],2),")",sep = "")
+    nfmkl <- paste("fmkl(",round(lambdafmkl1[1],2),",",round(lambdafmkl1[2],2),",",round(lambdafmkl1[3],2),",",
+                   round(lambdafmkl1[4],2),",",round(lambdafmkl1[5],2),")",sep = "")
     nRS <- paste("RS(",round(lambdaRS1[1],2),",",round(lambdaRS1[2],2),",",round(lambdaRS1[3],2),",",
                  round(lambdaRS1[4],2),",",round(lambdaRS1[5],2),")",sep = "")
   }
@@ -165,22 +165,22 @@ diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,tra
         scale_colour_manual(values = c("black","red")) +
         xlab("Quantile") + ylab("Value") + theme(legend.title = element_blank())}
 
-  # QQ-plotFMKL
-  observedFMKL <- rank(fit$data)/length(fit$data)
+  # QQ-plotfmkl
+  observedfmkl <- rank(fit$data)/length(fit$data)
   if(trace)
-    cat("\n Computing the theoretical quantiles for the FMKL parametrization \n")
-  theoreticalFMKL <- qhgld(p = observedFMKL,mixture = mixture,lambda1 = lambdaFMKL1,lambda2 = lambdaFMKL2,prob = pFMKL,
+    cat("\n Computing the theoretical quantiles for the fmkl parametrization \n")
+  theoreticalfmkl <- qhgld(p = observedfmkl,mixture = mixture,lambda1 = lambdafmkl1,lambda2 = lambdafmkl2,prob = pfmkl,
                            param = "fmkl",trace = trace)
-  observedFMKL <- observedFMKL[is.finite(theoreticalFMKL)]
-  o <- fit$data[is.finite(theoreticalFMKL)]
-  FMKLfacet.values <- facet.values[is.finite(theoreticalFMKL)]
-  theoreticalFMKL <- theoreticalFMKL[is.finite(theoreticalFMKL)]
-  qqFMKL <- data.frame(t = theoreticalFMKL,o = o,facet.values = FMKLfacet.values)
+  observedfmkl <- observedfmkl[is.finite(theoreticalfmkl)]
+  o <- fit$data[is.finite(theoreticalfmkl)]
+  fmklfacet.values <- facet.values[is.finite(theoreticalfmkl)]
+  theoreticalfmkl <- theoreticalfmkl[is.finite(theoreticalfmkl)]
+  qqfmkl <- data.frame(t = theoreticalfmkl,o = o,facet.values = fmklfacet.values)
 
   if(KS){
     if(trace)
-      cat("\n Kolmogorov-Smirnov Tests for the FMKL parametrization \n")
-    ksFMKL <- ks.test.hgld(data = fit$data,lambda1 = lambdaFMKL1[-1],lambda2 = lambdaFMKL2,p = pFMKL,mixture = mixture,
+      cat("\n Kolmogorov-Smirnov Tests for the fmkl parametrization \n")
+    ksfmkl <- ks.test.hgld(data = fit$data,lambda1 = lambdafmkl1[-1],lambda2 = lambdafmkl2,p = pfmkl,mixture = mixture,
                             param = "fmkl",alpha = alpha,len = len,no.test = no.test,trace = trace)
   }
 
@@ -189,37 +189,37 @@ diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,tra
     cat("\n Just another moment, we are computing the results... \n")
 
   if(facet)
-    plotqqFMKL <- ggplot(qqFMKL,aes(x = o,y = t)) + facet_wrap(~ facet.values,ncol = facet.ncol,scales = "free") + themes + titlesF
+    plotqqfmkl <- ggplot(qqfmkl,aes(x = o,y = t)) + facet_wrap(~ facet.values,ncol = facet.ncol,scales = "free") + themes + titlesF
   else
-    plotqqFMKL <- ggplot(qqFMKL,aes(x = o,y = t)) + themes + titles
+    plotqqfmkl <- ggplot(qqfmkl,aes(x = o,y = t)) + themes + titles
 
   if(plotKS)
-    plotqqFMKL <- {plotqqFMKL + geom_point(size = 1) + geom_smooth(color = "black",method = "lm",se = F) +
+    plotqqfmkl <- {plotqqfmkl + geom_point(size = 1) + geom_smooth(color = "black",method = "lm",se = F) +
         xlab("Sample Quantiles") + ylab("Theoretical Quantiles") +
-        annotate(geom = "text",x = Inf,y = -Inf,label = paste("K-S resample test =",ksFMKL,"%"),hjust = 1, vjust = -1)}
+        annotate(geom = "text",x = Inf,y = -Inf,label = paste("K-S resample test =",ksfmkl,"%"),hjust = 1, vjust = -1)}
   else
-    plotqqFMKL <- {plotqqFMKL + geom_point(size = 1) + geom_smooth(color = "black",method = "lm",se = F) +
+    plotqqfmkl <- {plotqqfmkl + geom_point(size = 1) + geom_smooth(color = "black",method = "lm",se = F) +
         xlab("Sample Quantiles") + ylab("Theoretical Quantiles")}
 
-  # Quantile plot FMKL
-  quantFMKL <- data.frame(x = observedFMKL,y = o,facet.values = FMKLfacet.values)
+  # Quantile plot fmkl
+  quantfmkl <- data.frame(x = observedfmkl,y = o,facet.values = fmklfacet.values)
 
   if(facet)
-    plotquantFMKL <- ggplot(quantFMKL,aes(x = x,y = y)) + facet_wrap(~ facet.values,ncol = facet.ncol,scales = "free") + themes + titlesF
+    plotquantfmkl <- ggplot(quantfmkl,aes(x = x,y = y)) + facet_wrap(~ facet.values,ncol = facet.ncol,scales = "free") + themes + titlesF
   else
-    plotquantFMKL <- ggplot(quantFMKL,aes(x = x,y = y)) + themes + titles
+    plotquantfmkl <- ggplot(quantfmkl,aes(x = x,y = y)) + themes + titles
 
   if(plotKS)
-    plotquantFMKL <- {plotquantFMKL + geom_line(aes(colour = "Data")) +
-        stat_function(fun = function(x) qhgld(p = x,mixture = mixture,lambda1 = lambdaFMKL1,lambda2 = lambdaFMKL2,
-                                              param = "fmkl",prob = pFMKL),aes(colour = nFMKL)) +
+    plotquantfmkl <- {plotquantfmkl + geom_line(aes(colour = "Data")) +
+        stat_function(fun = function(x) qhgld(p = x,mixture = mixture,lambda1 = lambdafmkl1,lambda2 = lambdafmkl2,
+                                              param = "fmkl",prob = pfmkl),aes(colour = nfmkl)) +
         scale_colour_manual(values = c("black","red")) +
         xlab("Quantile") + ylab("Sample") +
-        annotate(geom = "text",x = Inf,y = -Inf,label = paste("K-S resample test =",ksFMKL,"%"),hjust = 1, vjust = -1) + theme(legend.title = element_blank())}
+        annotate(geom = "text",x = Inf,y = -Inf,label = paste("K-S resample test =",ksfmkl,"%"),hjust = 1, vjust = -1) + theme(legend.title = element_blank())}
   else
-    plotquantFMKL <- {plotquantFMKL + geom_line(aes(colour = "Data")) +
-        stat_function(fun = function(x) qhgld(p = x,mixture = mixture,lambda1 = lambdaFMKL1,lambda2 = lambdaFMKL2,
-                                              param = "fmkl",prob = pFMKL),aes(colour = nFMKL)) +
+    plotquantfmkl <- {plotquantfmkl + geom_line(aes(colour = "Data")) +
+        stat_function(fun = function(x) qhgld(p = x,mixture = mixture,lambda1 = lambdafmkl1,lambda2 = lambdafmkl2,
+                                              param = "fmkl",prob = pfmkl),aes(colour = nfmkl)) +
         scale_colour_manual(values = c("black","red")) +
         xlab("Quantile") + ylab("Sample") + theme(legend.title = element_blank())}
 
@@ -228,36 +228,36 @@ diag.hgld <- function(fit,facet = FALSE,facet.breaks,facet.labels,facet.ncol,tra
     momentsRS <- fun.theo.bi.mv.gld(L1 = lambdaRS1[2],L2 = lambdaRS1[3],L3 = lambdaRS1[4],L4 = lambdaRS1[5],
                                     M1 = lambdaRS2[1],M2 = lambdaRS2[2],M3 = lambdaRS2[3],M4 = lambdaRS2[4],
                                     param1 = "rs",param2 = "rs",p1 = pRS,normalise = "Y")
-    momentsFMKL <- fun.theo.bi.mv.gld(L1 = lambdaFMKL1[2],L2 = lambdaFMKL1[3],L3 = lambdaFMKL1[4],L4 = lambdaFMKL1[5],
-                                      M1 = lambdaFMKL2[1],M2 = lambdaFMKL2[2],M3 = lambdaFMKL2[3],M4 = lambdaFMKL2[4],
-                                      param1 = "fmkl",param2 = "fmkl",p1 = pFMKL,normalise = "Y")
+    momentsfmkl <- fun.theo.bi.mv.gld(L1 = lambdafmkl1[2],L2 = lambdafmkl1[3],L3 = lambdafmkl1[4],L4 = lambdafmkl1[5],
+                                      M1 = lambdafmkl2[1],M2 = lambdafmkl2[2],M3 = lambdafmkl2[3],M4 = lambdafmkl2[4],
+                                      param1 = "fmkl",param2 = "fmkl",p1 = pfmkl,normalise = "Y")
     omomentsRS <- unlist(fun.moments(x = nonzero,normalise = "Y"))
     m <- data.frame("Moments" = c("Mean","Variance","Skewness","Kurtosis"),"Observed" = omomentsRS,"Theoretical RS" = momentsRS,
-                    "Theoretical FMKL" = momentsFMKL)
+                    "Theoretical fmkl" = momentsfmkl)
     row.names(m) <- NULL
   }
   else{
     momentsRS <- fun.theo.mv.gld(lambdaRS1[-1],param = "rs",normalise = "Y")
-    momentsFMKL <- fun.theo.mv.gld(lambdaFMKL1[-1],param = "fmkl",normalise = "Y")
+    momentsfmkl <- fun.theo.mv.gld(lambdafmkl1[-1],param = "fmkl",normalise = "Y")
     omomentsRS <- unlist(fun.moments(x = nonzero,normalise = "Y"))
     m <- data.frame("Moments" = c("Mean","Variance","Skewness","Kurtosis"),"Observed" = omomentsRS,"Theoretical RS" = momentsRS,
-                    "Theoretical FMKL" = momentsFMKL)
+                    "Theoretical fmkl" = momentsfmkl)
     row.names(m) <- NULL
   }
 
   # Return
   if(KS)
     r <- list("qqRS" = plotqqRS,
-              "qqFMKL" = plotqqFMKL,
+              "qqfmkl" = plotqqfmkl,
               "quantRS" = plotquantRS,
-              "quantFMKL" = plotquantFMKL,
+              "quantfmkl" = plotquantfmkl,
               "moments" = m,
-              "KS" = data.frame("RS" = 100*ksRS,"FMKL" = 100*ksFMKL))
+              "KS" = data.frame("RS" = 100*ksRS,"fmkl" = 100*ksfmkl))
   else
     r <- list("qqRS" = plotqqRS,
-              "qqFMKL" = plotqqFMKL,
+              "qqfmkl" = plotqqfmkl,
               "quantRS" = plotquantRS,
-              "quantFMKL" = plotquantFMKL,
+              "quantfmkl" = plotquantfmkl,
               "moments" = m)
   if(trace)
     cat("\n Finished! \n")

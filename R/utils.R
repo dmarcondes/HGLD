@@ -14,7 +14,7 @@ diag.reghgld <- function(reg,param,plotKS,full,h.bins){
     lambda <- lambda[(length(lambda)-3):length(lambda)]
     fitted <- reg$Fitted
   }
-  nFMKL <- paste("FMKL(",round(lambda[1],2),",",round(lambda[2],2),",",round(lambda[3],2),",",
+  nfmkl <- paste("fmkl(",round(lambda[1],2),",",round(lambda[2],2),",",round(lambda[3],2),",",
                  round(lambda[4],2),")",sep = "")
   nRS <- paste("RS(",round(lambda[1],2),",",round(lambda[2],2),",",round(lambda[3],2),",",
                round(lambda[4],2),")",sep = "")
@@ -73,36 +73,36 @@ diag.reghgld <- function(reg,param,plotKS,full,h.bins){
   }
 
   if(param == "fmkl"){
-    # qq-plotFMKL
-    observedFMKL <- rank(nonzero)/length(nonzero)
-    theoreticalFMKL <- qgl(p = observedFMKL,lambda1 = lambda,param = "fmkl")
-    observedFMKL <- observedFMKL[is.finite(theoreticalFMKL)]
-    o <- nonzero[is.finite(theoreticalFMKL)]
-    theoreticalFMKL <- theoreticalFMKL[is.finite(theoreticalFMKL)]
-    qqFMKL <- data.frame("t" = theoreticalFMKL,"o" = o)
+    # qq-plotfmkl
+    observedfmkl <- rank(nonzero)/length(nonzero)
+    theoreticalfmkl <- qgl(p = observedfmkl,lambda1 = lambda,param = "fmkl")
+    observedfmkl <- observedfmkl[is.finite(theoreticalfmkl)]
+    o <- nonzero[is.finite(theoreticalfmkl)]
+    theoreticalfmkl <- theoreticalfmkl[is.finite(theoreticalfmkl)]
+    qqfmkl <- data.frame("t" = theoreticalfmkl,"o" = o)
     ks <- round(ks.test(x = nonzero,y = pgl,lambda1 = lambda,param = "fmkl")$p.value,4)
 
     if(plotKS)
-      plotqq <- {ggplot(qqFMKL,aes(x = o,y = t)) + geom_point() + geom_smooth(color = "black",method = "lm",se = F) + themes + titles +
+      plotqq <- {ggplot(qqfmkl,aes(x = o,y = t)) + geom_point() + geom_smooth(color = "black",method = "lm",se = F) + themes + titles +
           xlab("Residuals Quantiles") + ylab("Theoretical Quantiles") +
-          annotate(geom = "text",x = (min(qqFMKL$o) + 0.1 * abs(max(qqFMKL$o))),
-                   y = max(qqFMKL$t),label = paste("K-S test p-value =",ks))}
+          annotate(geom = "text",x = (min(qqfmkl$o) + 0.1 * abs(max(qqfmkl$o))),
+                   y = max(qqfmkl$t),label = paste("K-S test p-value =",ks))}
     else
-      plotqq <- {ggplot(qqFMKL,aes(x = o,y = t)) + geom_point() + geom_smooth(color = "black",method = "lm",se = F) + themes + titles +
+      plotqq <- {ggplot(qqfmkl,aes(x = o,y = t)) + geom_point() + geom_smooth(color = "black",method = "lm",se = F) + themes + titles +
           xlab("Residuals Quantiles") + ylab("Theoretical Quantiles")}
 
-    # Quantile plot FMKL
-    quantFMKL <- data.frame("x" = observedFMKL,"y" = o)
+    # Quantile plot fmkl
+    quantfmkl <- data.frame("x" = observedfmkl,"y" = o)
     if(plotKS)
-      plotquant <- {ggplot(quantFMKL,aes(x = x,y = y)) + geom_line(aes(colour = "Residuals")) +
-          stat_function(fun = function(x) qgl(x,lambda1 = lambda,param = "fmkl"),aes(colour = nFMKL)) +
+      plotquant <- {ggplot(quantfmkl,aes(x = x,y = y)) + geom_line(aes(colour = "Residuals")) +
+          stat_function(fun = function(x) qgl(x,lambda1 = lambda,param = "fmkl"),aes(colour = nfmkl)) +
           themes + titles + scale_colour_manual(values = c("red","black")) +
           xlab("Quantile") + ylab("Residuals") +
-          annotate(geom = "text",x = (min(quantFMKL$x) + 0.1 * abs(max(quantFMKL$x))),
-                   y = 0.8*max(quantFMKL$y),label = paste("K-S test p-value =",ks)) + theme(legend.title = element_blank())}
+          annotate(geom = "text",x = (min(quantfmkl$x) + 0.1 * abs(max(quantfmkl$x))),
+                   y = 0.8*max(quantfmkl$y),label = paste("K-S test p-value =",ks)) + theme(legend.title = element_blank())}
     else
-      plotquant <- plotquant <- {ggplot(quantFMKL,aes(x = x,y = y)) + geom_line(aes(colour = "Residuals")) +
-          stat_function(fun = function(x) qgl(x,lambda1 = lambda,param = "fmkl"),aes(colour = nFMKL)) +
+      plotquant <- plotquant <- {ggplot(quantfmkl,aes(x = x,y = y)) + geom_line(aes(colour = "Residuals")) +
+          stat_function(fun = function(x) qgl(x,lambda1 = lambda,param = "fmkl"),aes(colour = nfmkl)) +
           themes + titles + scale_colour_manual(values = c("red","black")) +
           xlab("Quantile") + ylab("Residuals") + theme(legend.title = element_blank())}
 

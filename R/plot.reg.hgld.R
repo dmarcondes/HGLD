@@ -12,20 +12,22 @@
 #'  density curves are plotted in the same plot.
 #'
 #' @param x An object of class \link[HGLD]{reg.hgld}.
-#' @param newvalues A data frame with the new values of the covariates. Column names must match the ones given in formulas \emph{loc.formula} and \emph{zero.formula}.
-#' @param name A vector with the names of the new values rows. Default is the row names of the new values data frame.
-#' @param color The color of each density curve. Must have one color for each row of new values.
+#' @param newvalues A data frame with the new values of the covariates. Column names must match the ones given in formulas
+#' \emph{loc.formula} and \emph{zero.formula}.
+#' @param name A vector with the names of the new values profiles. Default is the row names of the newvalues data frame.
+#' @param color The color of each density curve. Must have one color for each row of newvalues.
 #' @param xlab Label of the x-axis.
 #' @param xlim A vector with the limits of the x-axis.
 #' @param title Legend title.
 #' @param ... Arguments to be passed to methods.
 #' @return \item{plot}{\link[ggplot2]{ggplot} density plot for the given new values}
 #' @examples
-#' set.seed(10)
+#' set.seed(100)
 #' tmp <- na.omit(healthcare)
-#' data <- tmp[sample(1:nrow(tmp),100),]
+#' data <- tmp[sample(1:nrow(tmp),50),]
 #' formula <- log_expense ~ age + sex + log_previous_expense
-#' reg <- suppressWarnings(reg.hgld(data,formula,formula,TRUE,n.simu = 10,param = "rs",plotKS = TRUE))
+#' reg <- suppressWarnings(reg.hgld(data = data,zero.formula = formula,loc.formula = formula,
+#'                                  full = FALSE,param = "rs"))
 #' newvalues <- tmp[sample(1:nrow(tmp),5),c(2,3,5,8)]
 #' plot(reg,newvalues)
 #'
@@ -76,11 +78,13 @@ plot.reg.hgld <- function(x,newvalues,name = row.names(newvalues),color = NULL,x
   p <- {ggplot(data.frame(x = reg$NZdata[[all.vars(reg$loc.formula)[1]]]),aes(x = x)) + themes + titles + ylab("Density") + xlab(xlab) +
     xlim(xlim)}
   for(i in 1:nrow(newvalues)){
-    loop_input = paste("stat_function(fun = function(x) dhgld(x = x - ",local[i],",lambda1 = c(",lambda0[i],",lambda),param = reg$param),aes(colour = '",name[i],"'))", sep="")
+    loop_input = paste("stat_function(fun = function(x) dhgld(x = x - ",local[i],",lambda1 = c(",lambda0[i],",lambda),,param = reg$param),aes(colour = '",name[i],"'))", sep="")
     p <- p + eval(parse(text=loop_input))
   }
   names(color) <- name
   p <- p + scale_colour_manual(title,values = color,breaks = rownames(newvalues))
   return(list("plot" = p))
 }
+
+
 
